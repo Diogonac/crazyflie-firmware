@@ -27,7 +27,7 @@ int main() {
   valor_pwm = 0.0;
 
   valor_rpm = 5000.0;
-  valor_rad = 1000.0;
+  valor_rad = 2200.0;
 
   // Turn motor on (20% power) and off every second
   while (true) {
@@ -37,7 +37,7 @@ int main() {
     motor3 = control_motor(valor_rad);
     motor4 = control_motor(valor_rad);
 
-    wait(5);
+    wait(20);
 
     motor1 = 0;
     motor2 = 0;
