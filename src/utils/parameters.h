@@ -13,6 +13,9 @@ const float I_xx = 16.0e-6; // kg.m^2
 const float I_yy = 16.0e-6; // kg.m^2
 const float I_zz = 29.0e-6; // kg.m^2
 const float l = 33.0e-3;    // m
+const float kd = 1.771e-10; // N.m.s^2
+const float kl = 1.472e-8; // N.s^2
+
 
 
 
