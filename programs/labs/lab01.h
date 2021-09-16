@@ -3,10 +3,10 @@
 
 // Define all LEDs as digital output objects
 DigitalOut BLUE(LED_BLUE_L);
-DigitalOut RED_L(LED_RED_R);
-DigitalOut RED_R(LED_RED_L);
-DigitalOut GREEN_L(LED_GREEN_R);
-DigitalOut GREEN_R(LED_GREEN_L);
+DigitalOut RED_R(LED_RED_R);
+DigitalOut RED_L(LED_RED_L);
+DigitalOut GREEN_R(LED_GREEN_R);
+DigitalOut GREEN_L(LED_GREEN_L);
 
 // Define all motors as PWM objects
 PwmOut M1(MOTOR1);
