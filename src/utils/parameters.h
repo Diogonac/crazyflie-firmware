@@ -16,6 +16,9 @@ const float l = 33.0e-3;    // m
 const float kd = 1.771e-10; // N.m.s^2
 const float kl = 1.472e-8; // N.s^2
 
+// Iterruption time
+const float dt = 0.002;
+
 
 
 

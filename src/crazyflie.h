@@ -22,5 +22,6 @@
 
 // Include modules
 #include "Modules/mixer.h"
+#include "Modules/attitude_estimator.h"
 
 #endif
