@@ -19,6 +19,12 @@ const float kl = 1.472e-8; // N.s^2
 // Iterruption time
 const float dt = 0.002;
 
+// LPF phi constants
+const float wc_phi = 5.0;
+const float alpha = (wc_phi * dt) / (1 + wc_phi * dt);
+
+
+
 
 
 

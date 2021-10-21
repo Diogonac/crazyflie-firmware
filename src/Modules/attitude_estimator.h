@@ -30,8 +30,15 @@ private:
   // IMU variabes
   float ax, ay, az;
 
-  // Variables for calc
+  // Variables for calc phi and theta from acc
   float phi_a, theta_a;
+
+// Variables for calc phi and theta from gyr
+float phi_g, theta_g, psi_g;
+
+// Variables to calculate bias error
+float p_bias, q_bias, r_bias;
+float sum_p, sum_q, sum_r;
 
 
 };

@@ -1,42 +1,78 @@
 #include "attitude_estimator.h"
 
 // Class Constructor
-AttitudeEstimator :: AttitudeEstimator () : imu(IMU_SDA ,IMU_SCL){
+AttitudeEstimator ::AttitudeEstimator() : imu(IMU_SDA, IMU_SCL) {
 
-// Initial conditions angles (rad)
-phi = 0.0;
-theta = 0.0;
-psi = 0.0;
+  // Initial conditions angles (rad)
+  phi = 0.0;
+  theta = 0.0;
+  psi = 0.0;
 
-// Initial conditions angular velocities (rad/s)
-p = 0.0;
-q = 0.0;
-r = 0.0;
+  // Initial conditions angular velocities (rad/s)
+  p = 0.0;
+  q = 0.0;
+  r = 0.0;
 
 }
 
 // Initialize class
-void AttitudeEstimator ::init(){
+void AttitudeEstimator ::init() {
 
-imu.init();
+  imu.init();
+
+  sum_p = 0.0;
+  sum_q = 0.0;
+  sum_r = 0.0;
+
+  for (int i = 0; i < 500; i++) {
+
+    imu.read();
+
+    sum_p += imu.gx;
+    sum_q += imu.gy;
+    sum_r += imu.gz;
+
+    wait(dt);
+  }
+
+  p_bias = sum_p / 500;
+  q_bias = sum_q / 500;
+  r_bias = sum_r / 500;    
 
 }
 
 // Estimate Euler angles (rad) and angular velocities (rad/s)
-void AttitudeEstimator :: estimate (){
+void AttitudeEstimator ::estimate() {
 
-    imu.read();
+  // Read IMU acc and gyr
+  imu.read();
 
-    ax = imu.ax;
-    ay = imu.ay;
-    az = imu.az;
+  // Save acc and gyr
+  ax = imu.ax;
+  ay = imu.ay;
+  az = imu.az;
 
-    phi_a = atan2(-ay, -az); 
+  p = imu.gx - p_bias;
+  q = imu.gy - q_bias;
+  r = imu.gz - r_bias;
 
-    phi = phi_a;
+  // Calculate  phi and theta angle from acc
+  phi_a = atan2(-ay, -az);
+  theta_a = atan2(ax, -((az > 0) - (az < 0)) * sqrt(ay * ay + az * az));
 
 
+  // Calculate  phi, theta and psi angle from gyr
+  // Linear solution
+  //phi_g = phi + p * dt;
 
+  // No linear solution
+  phi_g = phi + (p + sin(phi) * tan(theta) * q + cos(phi) * tan(theta) * r) * dt;
+  theta_g = theta + (cos(phi) * q - sin(phi) * r) * dt;
+  psi_g = psi + (sin(phi) * (1 / cos(theta)) * q + cos(phi) * (1 / cos(theta)) * r) * dt;
 
+  // Estimate angles with complementare filter (LPF + HPF)
+  phi = (1 - alpha) * phi_g + alpha * phi_a; 
+  theta = (1 - alpha) * theta_g + alpha * theta_a; 
+  psi = psi_g;
 
 }
