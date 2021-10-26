@@ -1,10 +1,7 @@
 #include "mixer.h"
 
 // Class Constructor
-Mixer::Mixer()
-    : motor1(MOTOR1), motor2(MOTOR2), motor3(MOTOR3), motor4(MOTOR4),
-      BLUE(LED_BLUE_L), RED_L(LED_RED_L), RED_R(LED_RED_R),
-      GREEN_L(LED_GREEN_L), GREEN_R(LED_GREEN_R) {
+Mixer::Mixer(): motor1(MOTOR1), motor2(MOTOR2), motor3(MOTOR3), motor4(MOTOR4), BLUE(LED_BLUE_L), RED_L(LED_RED_L), RED_R(LED_RED_R), GREEN_L(LED_GREEN_L), GREEN_R(LED_GREEN_R) {
 
   motor1.period(1.0 / 500.0);
   motor2.period(1.0 / 500.0);
@@ -34,9 +31,9 @@ void Mixer::actuate(float f_t, float tau_phi, float tau_theta, float tau_psi) {
   if (armed == true) {
 
     motor1 = control_motor(omega_r_1);
-    motor2 = control_motor(omega_r_1);
-    motor3 = control_motor(omega_r_1);
-    motor4 = control_motor(omega_r_1);
+    motor2 = control_motor(omega_r_2);
+    motor3 = control_motor(omega_r_3);
+    motor4 = control_motor(omega_r_4);
 
   } else {
 
@@ -50,14 +47,11 @@ void Mixer::actuate(float f_t, float tau_phi, float tau_theta, float tau_psi) {
 // Convert total trust force (N) and torques (N.m) to angular velocities (rad/s)
 void Mixer::mixer(float f_t, float tau_phi, float tau_theta, float tau_psi) {
 
-  omega_r_1 = f_t / (4 * kl) - tau_phi / (4 * kl * l) -
-              tau_theta / (4 * kl * l) - tau_psi / (4 * kd);
-  omega_r_2 = f_t / (4 * kl) - tau_phi / (4 * kl * l) +
-              tau_theta / (4 * kl * l) + tau_psi / (4 * kd);
-  omega_r_3 = f_t / (4 * kl) + tau_phi / (4 * kl * l) +
-              tau_theta / (4 * kl * l) - tau_psi / (4 * kd);
-  omega_r_4 = f_t / (4 * kl) + tau_phi / (4 * kl * l) -
-              tau_theta / (4 * kl * l) + tau_psi / (4 * kd);
+  omega_r_1 = (f_t / (4 * Kl)) - (tau_phi / (4 * Kl * l)) - (tau_theta / (4 * Kl* l)) - (tau_psi / (4 * Kd));
+  omega_r_2 = (f_t / (4 * Kl)) - (tau_phi / (4 * Kl * l)) + (tau_theta / (4 * Kl * l)) + (tau_psi / (4 * Kd));
+  omega_r_3 = (f_t / (4 * Kl)) + (tau_phi / (4 * Kl * l)) + (tau_theta / (4 * Kl * l)) - (tau_psi / (4 * Kd));
+  omega_r_4 = (f_t / (4 * Kl)) + (tau_phi / (4 * Kl * l)) - (tau_theta / (4 * Kl * l)) + (tau_psi / (4 * Kd));
+
 
   if (omega_r_1 < 0) {
     omega_r_1 = 0;

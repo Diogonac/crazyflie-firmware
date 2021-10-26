@@ -34,7 +34,7 @@ int main() {
   // Actuate motor with 70% mg total thrust force (N) and zero torques (N.m)
 
 //actuate (0.6*m*g,0,0,0); // Teste 1
-actuate (0,0.005,0,0); // Teste 2
+actuate (0,0.0,0.0,0.005); // Teste 2
 //actuate (0,0,0.005,0); // Teste 3
 //actuate (0,0,0,0.001); // Teste 4
   wait(5);
@@ -59,10 +59,10 @@ float control_motor(float omega_r) {
 // (rad/s)
 void mixer(float f_t, float tau_phi, float tau_theta, float tau_psi) {
 
-  omega_1 = f_t / (4 * kl) - tau_phi / (4 * kl * l) - tau_theta / (4 * kl * l) - tau_psi / (4 * kd);
-  omega_2 = f_t / (4 * kl) - tau_phi / (4 * kl * l) + tau_theta / (4 * kl * l) + tau_psi / (4 * kd);
-  omega_3 = f_t / (4 * kl) + tau_phi / (4 * kl * l) + tau_theta / (4 * kl * l) - tau_psi / (4 * kd);
-  omega_4 = f_t / (4 * kl) + tau_phi / (4 * kl * l) - tau_theta / (4 * kl * l) + tau_psi / (4 * kd);
+  omega_1 = f_t / (4 * Kl) - tau_phi / (4 * Kl * l) - tau_theta / (4 * Kl * l) - tau_psi / (4 * Kd);
+  omega_2 = f_t / (4 * Kl) - tau_phi / (4 * Kl * l) + tau_theta / (4 * Kl * l) + tau_psi / (4 * Kd);
+  omega_3 = f_t / (4 * Kl) + tau_phi / (4 * Kl * l) + tau_theta / (4 * Kl * l) - tau_psi / (4 * Kd);
+  omega_4 = f_t / (4 * Kl) + tau_phi / (4 * Kl * l) - tau_theta / (4 * Kl * l) + tau_psi / (4 * Kd);
 
   if (omega_1 < 0) {
     omega_1 = 0;
