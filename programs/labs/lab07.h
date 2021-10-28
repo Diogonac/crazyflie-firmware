@@ -31,6 +31,7 @@ int main() {
     if (flag) {
       flag = false;
       att_est.estimate();
+
     }
     // Print attitude
     if (serial.readable()) {

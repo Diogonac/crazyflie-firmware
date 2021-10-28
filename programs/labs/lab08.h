@@ -41,7 +41,7 @@ mixer.arm();
       cont_att.control(0, 0, 0, att_est.phi, att_est.theta, att_est.psi, att_est.p, att_est.q, att_est.r);
 
       // Actuate motor with 70% mg total thrust force (N) and zero torques
-      mixer.actuate (g*m, cont_att.tau_phi, cont_att.tau_theta, cont_att.tau_psi);
+      mixer.actuate (0.7*g*m, cont_att.tau_phi, cont_att.tau_theta, cont_att.tau_psi);
 
     }
   }
