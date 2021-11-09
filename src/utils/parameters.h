@@ -18,6 +18,7 @@ const float Kl = 1.472e-8; // N.s^2
 
 // Iterruption time
 const float dt = 0.002;
+const float dt_range = 0.05;
 
 // LPF phi constants
 const float wc_phi = 5.0;
@@ -27,6 +28,15 @@ const float alpha = (wc_phi * dt) / (1 + wc_phi * dt);
 const float kd_att = 20.0; 
 const float kp_att = 135.1580; 
 
+// Vertical estimator constants
+const float wc = 20; //aprox. 500Hz
+const float zeta = 0.6;
+const float l1 = wc*wc;
+const float l2 = 2 * zeta * wc;
+
+// Vertical controller gains
+const float kd_vert = 3.42;
+const float kp_vert = 5.86;
 
 
 
