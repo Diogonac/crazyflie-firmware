@@ -25,11 +25,11 @@ const float wc_phi = 5.0;
 const float alpha = (wc_phi * dt) / (1 + wc_phi * dt);
 
 // Attitude controller gains
-const float kd_att = 20.0; 
-const float kp_att = 135.1580; 
+const float kd_att = 26.67;//20.0; 
+const float kp_att = 240.28;//135.1580; 
 
 // Vertical estimator constants
-const float wc = 20; //aprox. 500Hz
+const float wc = 10; //aprox. 500Hz
 const float zeta = 0.6;
 const float l1 = wc*wc;
 const float l2 = 2 * zeta * wc;
@@ -38,8 +38,15 @@ const float l2 = 2 * zeta * wc;
 const float kd_vert = 3.42;
 const float kp_vert = 5.86;
 
+// Horizontal estimator constants
+const float angle_flow = 42.0 * pi / 180.0;
+const float W_pixel = 420.0;
+const float sigma = (2 * tan(angle_flow / 2)) / (W_pixel * dt);
+const float l_hor = 20.0; 
 
-
+// Horizontal controller gains
+const float kd_hor = 3.42;
+const float kp_hor = 5.86;
 
 
 #endif
