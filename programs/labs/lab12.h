@@ -1,5 +1,6 @@
 #include "crazyflie.h"
 #include "mbed.h"
+#include <cstdio>
 
 // Crazyflie controller objects
 Mixer mixer;
@@ -12,7 +13,7 @@ HorizontalController hor_cont;
 
 // Ticker objects
 Ticker tic, tic_range;
-
+Timer flight_time;
 // Interrupt flag and counter variables
 bool flag, flag_range;
 
@@ -23,7 +24,8 @@ void callback_range() { flag_range = true; }
 // Main program
 int main() {
   // Set references
-  float z_r = 0.2;
+  float z_r = 0.6;
+  float ramp_z = 0.0;
   float x_r = 0.0;
   float y_r = 0.0;
   float psi_r = 0.0;
@@ -36,6 +38,10 @@ int main() {
   tic_range.attach(&callback_range, dt_range);
   // Arm motors and run controller while stable
   mixer.arm();
+
+  // Start the flight time
+  flight_time.start();
+
   while (abs(att_est.phi) <= pi / 4.0 && abs(att_est.theta) <= pi / 4.0 &&
          abs(att_est.p) <= 4.0 * pi && abs(att_est.q) <= 4.0 * pi &&
          abs(att_est.r) <= 4.0 * pi) {
@@ -54,7 +60,30 @@ int main() {
                         ver_est.z);
         hor_cont.control(x_r, y_r, hor_est.x, hor_est.y, hor_est.u, hor_est.v);
       }
-      ver_cont.control(z_r, ver_est.z, ver_est.w);
+
+      if (flight_time.read() < 10 && ramp_z < z_r) {
+        ramp_z = ramp_z + 0.001;
+        ver_cont.control(ramp_z, ver_est.z, ver_est.w);
+      }
+
+        if (flight_time.read() < 10 && ramp_z >= z_r) {
+        ver_cont.control(z_r, ver_est.z, ver_est.w);
+      }
+
+      if (flight_time.read() > 10 && ramp_z > 0.01) {
+
+        ramp_z = ramp_z - 0.001;
+        ver_cont.control(ramp_z, ver_est.z, ver_est.w);
+        if (ver_est.z < 0.01) {
+
+          // Disarm motors and end program
+          mixer.disarm();
+          flight_time.reset();
+          flight_time.stop();
+
+        }
+      }
+
       att_cont.control(hor_cont.phi_r, hor_cont.theta_r, psi_r, att_est.phi,
                        att_est.theta, att_est.psi, att_est.p, att_est.q,
                        att_est.r);
