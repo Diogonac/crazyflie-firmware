@@ -43,8 +43,8 @@ if(range.d < 2.0)
 {
     float z_m = cos(phi) * cos(theta) * range.d;
 
-    w = w + l1 * dt * (z_m - z);
-    z = z + l2 * dt * (z_m - z);
+    w = w + l1 * dt_range * (z_m - z);
+    z = z + l2 * dt_range * (z_m - z);
 }
 
 }
