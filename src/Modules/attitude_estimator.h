@@ -1,8 +1,8 @@
 #ifndef attitude_estimator_h
 #define attitude_estimator_h
 
-#include "crazyflie.h"
 #include "mbed.h"
+#include "crazyflie.h"
 
 // Attitude estimator Class
 class AttitudeEstimator {

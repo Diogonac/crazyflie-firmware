@@ -1,8 +1,8 @@
 #ifndef mixer_h
 #define mixer_h
 
-#include "crazyflie.h"
 #include "mbed.h"
+#include "crazyflie.h"
 
 // Mixer Class
 class Mixer {
