@@ -1,8 +1,8 @@
 #ifndef horizontal_controller_h
 #define horizontal_controller_h
 
-#include "crazyflie.h"
 #include "mbed.h"
+#include "crazyflie.h"
 
 // Horizontal estimator Class
 class HorizontalController {

@@ -1,8 +1,8 @@
 #ifndef vertical_controller_h
 #define vertical_controller_h
 
-#include "crazyflie.h"
 #include "mbed.h"
+#include "crazyflie.h"
 
 // Vertical estimator Class
 class VerticalController {

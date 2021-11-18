@@ -1,8 +1,8 @@
 #ifndef horizontal_estimator_h
 #define horizontal_estimator_h
 
-#include "crazyflie.h"
 #include "mbed.h"
+#include "crazyflie.h"
 
 // Horizontal estimator Class
 class HorizontalEstimator {
