@@ -62,11 +62,11 @@ int main() {
       }
 
       if (flight_time.read() < 10 && ramp_z < z_r) {
-        ramp_z = ramp_z + 0.001;
+        ramp_z = ramp_z + 0.05;
         ver_cont.control(ramp_z, ver_est.z, ver_est.w);
       }
 
-        if (flight_time.read() < 10 && ramp_z >= z_r) {
+      if (flight_time.read() < 10 && ramp_z >= z_r) {
         ver_cont.control(z_r, ver_est.z, ver_est.w);
       }
 
@@ -74,14 +74,14 @@ int main() {
 
         ramp_z = ramp_z - 0.001;
         ver_cont.control(ramp_z, ver_est.z, ver_est.w);
-        if (ver_est.z < 0.01) {
+      }
 
-          // Disarm motors and end program
-          mixer.disarm();
-          flight_time.reset();
-          flight_time.stop();
+      if (ver_est.z < 0.01 && flight_time.read() > 10) {
 
-        }
+        // Disarm motors and end program
+        mixer.disarm();
+        flight_time.reset();
+        flight_time.stop();
       }
 
       att_cont.control(hor_cont.phi_r, hor_cont.theta_r, psi_r, att_est.phi,
