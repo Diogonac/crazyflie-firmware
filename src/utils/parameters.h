@@ -26,7 +26,7 @@ const float alpha = (wc_phi * dt) / (1 + wc_phi * dt);
 
 // Attitude controller gains
 const float Ts_att = 0.3;
-const float OS_att = 0.2;
+const float OS_att = 0.5;//0.3;
 const float zeta_att = -log(OS_att/100)/sqrt(pow(pi, 2) +pow((log(OS_att/100)), 2));
 const float wn_att = 4 / (zeta_att * Ts_att);
 
@@ -40,8 +40,8 @@ const float l1 = wc*wc;
 const float l2 = 2 * zeta * wc; 
 
 // Vertical controller gains
-const float Ts_vert = 5.0;
-const float OS_vert = 5.0;
+const float Ts_vert = 2.5;
+const float OS_vert = 0.5;//0.2;
 const float zeta_vert = -log(OS_vert/100)/sqrt(pow(pi, 2) +pow((log(OS_vert/100)), 2));
 const float wn_vert = 4 / (zeta_vert * Ts_vert);
 
@@ -52,11 +52,11 @@ const float kp_vert = pow(wn_vert, 2);
 const float angle_flow = 42.0 * pi / 180.0;
 const float W_pixel = 420.0;
 const float sigma = (2 * tan(angle_flow / 2)) / (W_pixel * dt);
-const float l_hor = 20.0; 
+const float l_hor = 50.0;//40.0; 
 
 // Horizontal controller gains
-const float Ts_hor = 3.5;
-const float OS_hor = 0.2;
+const float Ts_hor = 5.0;
+const float OS_hor = 0.5;
 const float zeta_hor = -log(OS_hor/100)/sqrt(pow(pi, 2) +pow((log(OS_hor/100)), 2));
 const float wn_hor = 4 / (zeta_hor * Ts_hor);
 

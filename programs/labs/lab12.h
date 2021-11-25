@@ -1,5 +1,5 @@
-#include "crazyflie.h"
 #include "mbed.h"
+#include "crazyflie.h"
 #include <cstdio>
 
 // Crazyflie controller objects
@@ -24,11 +24,12 @@ void callback_range() { flag_range = true; }
 // Main program
 int main() {
   // Set references
-  float z_r = 0.6;
+  float z_r = 0.5;
   float ramp_z = 0.0;
   float x_r = 0.0;
   float y_r = 0.0;
   float psi_r = 0.0;
+  float flight_t = 10.0; // Time of flight
   // Initialize estimators objects
   att_est.init();
   ver_est.init();
@@ -61,22 +62,22 @@ int main() {
         hor_cont.control(x_r, y_r, hor_est.x, hor_est.y, hor_est.u, hor_est.v);
       }
 
-      if (flight_time.read() < 10 && ramp_z < z_r) {
-        ramp_z = ramp_z + 0.05;
+      if (flight_time.read() < flight_t && ramp_z < z_r) {
+        ramp_z = ramp_z + 0.001;
         ver_cont.control(ramp_z, ver_est.z, ver_est.w);
       }
 
-      if (flight_time.read() < 10 && ramp_z >= z_r) {
+      if (flight_time.read() < flight_t && ramp_z >= z_r) {
         ver_cont.control(z_r, ver_est.z, ver_est.w);
       }
 
-      if (flight_time.read() > 10 && ramp_z > 0.01) {
+      if (flight_time.read() > flight_t && ramp_z > 0.01) {
 
         ramp_z = ramp_z - 0.001;
         ver_cont.control(ramp_z, ver_est.z, ver_est.w);
       }
 
-      if (ver_est.z < 0.01 && flight_time.read() > 10) {
+      if (ver_est.z < 0.01 && flight_time.read() > flight_t) {
 
         // Disarm motors and end program
         mixer.disarm();
