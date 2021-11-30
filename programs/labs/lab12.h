@@ -24,12 +24,12 @@ void callback_range() { flag_range = true; }
 // Main program
 int main() {
   // Set references
-  float z_r = 0.5;
+  float z_r = 1.0;
   float ramp_z = 0.0;
   float x_r = 0.0;
   float y_r = 0.0;
   float psi_r = 0.0;
-  float flight_t = 10.0; // Time of flight
+  float flight_t = 60.0; // Time of flight
   // Initialize estimators objects
   att_est.init();
   ver_est.init();

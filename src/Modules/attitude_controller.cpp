@@ -17,7 +17,7 @@ void AttitudeController :: control(float phi_r , float theta_r , float psi_r , f
 
   tau_phi = control_siso(phi_r, phi, p, kp_att, kd_att) * I_xx;
   tau_theta = control_siso(theta_r, theta, q, kp_att, kd_att) * I_yy;
-  tau_psi = control_siso(psi_r, psi, r, kp_att, kd_att) * I_zz;
+  tau_psi = control_siso(psi_r, psi, r, kp_att_psi, kd_att_psi) * I_zz;
  
 
 }
