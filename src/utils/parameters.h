@@ -21,7 +21,7 @@ const float dt = 0.002;
 const float dt_range = 0.05;
 
 // LPF phi constants
-const float wc_phi = 0.8;
+const float wc_phi = 0.5;
 const float alpha = (wc_phi * dt) / (1 + wc_phi * dt);
 
 // Attitude controller gains phi and theta
@@ -41,7 +41,7 @@ const float kd_att_psi = 2 * zeta_att_psi * wn_att_psi;
 const float kp_att_psi = pow(wn_att_psi, 2);
 
 // Vertical estimator constants
-const float wc = 10; //aprox. 500Hz
+const float wc = 8; //aprox. 500Hz
 const float zeta = sqrt(2)/2;
 const float l1 = wc*wc;
 const float l2 = 2 * zeta * wc; 

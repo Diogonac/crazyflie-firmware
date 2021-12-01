@@ -24,7 +24,7 @@ void AttitudeEstimator ::init() {
   sum_q = 0.0;
   sum_r = 0.0;
 
-  for (int i = 0; i < 500; i++) {
+  for (int i = 0; i < 1000; i++) {
 
     imu.read();
 
@@ -35,9 +35,9 @@ void AttitudeEstimator ::init() {
     wait(dt);
   }
 
-  p_bias = sum_p / 500;
-  q_bias = sum_q / 500;
-  r_bias = sum_r / 500;    
+  p_bias = sum_p / 1000;
+  q_bias = sum_q / 1000;
+  r_bias = sum_r / 1000;    
 
 }
 
@@ -59,11 +59,6 @@ void AttitudeEstimator ::estimate() {
   // Calculate  phi and theta angle from acc
   phi_a = atan2(-ay, -az);
   theta_a = atan2(ax, -((az > 0) - (az < 0)) * sqrt(ay * ay + az * az));
-
-
-  // Calculate  phi, theta and psi angle from gyr
-  // Linear solution
-  //phi_g = phi + p * dt;
 
   // No linear solution
   phi_g = phi + (p + sin(phi) * tan(theta) * q + cos(phi) * tan(theta) * r) * dt;
